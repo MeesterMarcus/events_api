@@ -1,28 +1,29 @@
 var express = require('express');
-var router = express.Router();
 var http = require("http");
-var url ="app.ticketmaster.com";
+var rp = require('request-promise');
+
+var router = express.Router();
+var url ="https://app.ticketmaster.com/discovery/v2/events.json?keyword=kanye&apikey=FXtcvJb7gP7JHkHApAMrS8zToFfbqSYR";
 
 router.get('/',function(req,res){
     res.send('Test index');
 });
 
 router.get('/newsfeed',function(req,res){
-    res.send('Test newsfeed');
+    // res.send("newsfeed");
     var options = {
-        host: url,
-        path: "/discovery/v2/events.json?keyword=kanye&apikey=FXtcvJb7gP7JHkHApAMrS8zToFfbqSYR",
-        method: 'GET'
-    };
+        uri: url,
+        headers: {
+         'User-Agent': 'Request-Promise'
+     },
+     json: true // Automatically parses the JSON string in the response 
+     };
 
-    http.request(options, function(res) {
-        console.log('STATUS: ' + res.statusCode);
-        console.log('HEADERS: ' + JSON.stringify(res.headers));
-        res.setEncoding('utf8');
-        res.on('data', function (chunk) {
-            console.log('BODY: ' + chunk);
-        });
-    }).end();
+    return rp(options)
+    .then(function(response){
+        res.send(response);
+        console.log(response);
+    });
 });
 
 module.exports = router; 
