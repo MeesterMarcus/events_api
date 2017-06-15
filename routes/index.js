@@ -3,7 +3,7 @@ var http = require("http");
 var rp = require('request-promise');
 
 var router = express.Router();
-var url ="https://app.ticketmaster.com/discovery/v2/events.json?keyword=kanye&apikey=FXtcvJb7gP7JHkHApAMrS8zToFfbqSYR";
+var url ="https://app.ticketmaster.com/discovery/v2/events.json?city=Austin&genre=rock,rap,pop&apikey=FXtcvJb7gP7JHkHApAMrS8zToFfbqSYR";
 
 router.get('/',function(req,res){
     res.send('Test index');
